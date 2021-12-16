@@ -15,6 +15,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
         with:
           # GitHub 源仓库地址
-          source-repo: git@github.com:yiyungent/clear-image-action.git
+          source-repo: git@github.com:yiyungent/afdian-action.git
           # Gitee 目标仓库地址
-          destination-repo: git@gitee.com:yiyungent/clear-image-action.git
+          destination-repo: git@gitee.com:yiyungent/afdian-action.git

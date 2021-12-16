@@ -1,4 +1,4 @@
-name: clear-image-action Release
+name: afdian-action Release
 
 on: 
   push:

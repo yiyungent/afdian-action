@@ -1,6 +1,6 @@
-name: "clear-image-action"
+name: "afdian-action"
 author: yiyungent
-description: "Clean up unreferenced images. | 清理未引用图片"
+description: "爱发电 自动生成赞助页面 | GitHub Action"
 
 
 inputs:
@@ -14,36 +14,46 @@ inputs:
   #   default: ${{ github.repository }}
   #   required: false
 
-  scan_directory:
-    description: "scan directory (md, html, images)"
-    default: ""
+  template_filePath:
+    description: "template_filePath"
+    default: ".github/afdian-action.cshtml"
     required: false
 
-  ignore_paths:
-    description: "ignore paths"
-    default: ""
+  target_filePath:
+    description: "target_filePath"
+    default: "README.md"
+    required: false
+
+  start_flag:
+    description: "start_flag"
+    default: "<!-- AFDIAN-ACTION:START -->"
     required: false
   
-  # TODO: 未使用, 直接使用回到覆盖, 不方便识别默认base分支
-  base:
-    description: "base branch for create-pull-request. | Sets the pull request base branch."
-    default: ""
+  end_flag:
+    description: "end_flag"
+    default: "<!-- AFDIAN-ACTION:END -->"
     required: false
 
-  cia_debug:
-    description: "debug for clear-image-action"
+  afdian_userId:
+    description: "afdian_userId"
+    default: ""
+    required: true
+  
+  afdian_token:
+    description: "afdian_token"
+    default: ""
+    required: true
+
+  afdian_debug:
+    description: "debug for afdian-action"
     default: false
     required: false
 
 
 outputs:
-  image_report_clear:
-    description: "image report: clear"
-    value: ${{ steps.run-tool-cimg.outputs.image_report }}
-
-  image_report_check:
-    description: "image report: check"
-    value: ${{ steps.run-tool-fimg.outputs.image_report }}
+  afdian_result:
+    description: "afdian_result"
+    value: "暂时不输出"
 
 
 runs:
@@ -55,58 +65,25 @@ runs:
       with:
         dotnet-version: 6.0.100
     
-    - name: Install tool
+    - name: Run
       # The command you want to run. This can be inline or a script in your action repository:
       # ${{ github.action_path }} or $GITHUB_ACTION_PATH
       # run: ${{ github.action_path }}/test/script.sh
+      env: |
+        INPUT_AFDIAN_USERID: ${{ inputs.afdian_userId }}
+        INPUT_AFDIAN_TOKEN: ${{ inputs.afdian_token }}
+        INPUT_TEMPLATE_FILEPATH: ${{ github.workspace }}/${{ inputs.template_filePath }}
+        INPUT_TARGET_FILEPATH: ${{ github.workspace }}/${{ inputs.target_filePath }}
+        INPUT_START_FLAG: ${{ inputs.start_flag }}
+        INPUT_END_FLAG: ${{ inputs.end_flag }}
+        INPUT_AFDIAN_DEBUG: ${{ inputs.afdian_debug }}
       run: | 
-        dotnet tool install -g coo
-        coo --version
+        # export INPUT_CIA_DEBUG=${{ inputs.cia_debug }}
+        cd ${{ github.action_path }}/src/Afdian.Action
+        dotnet run
       shell: bash
-    
-    - name: Run tool cimg
-      id: run-tool-cimg
-      run: |
-        export INPUT_CIA_DEBUG=${{ inputs.cia_debug }}
-        # coo cimg --github-action -d --ignore-paths='${{ inputs.ignore_paths }}' "F:\Com\me\Repos\notebook\source\_posts"
-        # 注意: 是 workspace 而不是 action_path, action_path 一定指向 clear-image-action. 而不是 workspace 指向正在使用此action的仓库根目录
-        coo cimg --github-action -d --ignore-paths='${{ inputs.ignore_paths }}' ${{ github.workspace }}/${{ inputs.scan_directory }}
-      shell: bash
-
-    - name: Run tool fimg
-      id: run-tool-fimg
-      run: |
-        export INPUT_CIA_DEBUG=${{ inputs.cia_debug }}
-        coo fimg --github-action --ignore-paths='${{ inputs.ignore_paths }}' ${{ github.workspace }}/${{ inputs.scan_directory }}
-      shell: bash
-
-    - name: The content must be escaped to preserve newlines.
-      id: get-pr-body
-      run: |
-        body="${{ steps.run-tool-cimg.outputs.image_report }} ${{ steps.run-tool-fimg.outputs.image_report }}"
-        # ${string//substring/replacement} # 使用$replacement, 代替所有匹配的$substring
-        body="${body//'%'/%25}"
-        body="${body//'\n'/%0A}"
-        body="${body//'\r'/%0D}" 
-        echo ::set-output name=body::$body
-      shell: bash
-
-    # Make changes to pull request here
-    # https://github.com/peter-evans/create-pull-request
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        commit-message: "Update image report"
-        branch: clear-image-action/report
-        delete-branch: true
-        branch-suffix: "short-commit-hash"
-        title: '[clear-image-action] Update report'
-        body: ${{ steps.get-pr-body.outputs.body }}
-        labels: |
-          image-report
-          automated pr
 
 
 branding:
-  icon: "image"
-  color: "green"
+  icon: "heart"
+  color: "red"
