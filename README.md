@@ -11,7 +11,7 @@
 
 使用 `GitHub Action` 自动生成 爱发电 赞助页面, 无需再手动更新赞助列表。
 
-> 效果见 [Sponsor.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsor.md)
+> 效果见 [Sponsors.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsors.md)
 
 ## 功能
 
@@ -128,7 +128,620 @@ jobs:
           automated pr
 ```
 
-> 生成效果见 [Sponsor.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsor.md)
+> 生成效果见 [Sponsors.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsors.md)
+
+
+## 自定义模板
+
+> 事实上, @Model.Order 值与爱发电官方 queryOrder 返回一致, @Model.Sponsor 值与爱发电官方 querySponsor 返回一致
+
+<details>
+  <summary>点我 打开/关闭 模板参数</summary>
+
+    ```csharp
+    // AfdianViewModel 即为 @Model
+    public class AfdianViewModel
+    {
+        public QueryOrderResponseModel Order { get; set; }
+
+        public QuerySponsorResponseModel Sponsor { get; set; }
+    }
+    ```
+    ```csharp
+    public class QueryOrderResponseModel
+    {
+        public class DataModel
+        {
+            public class OrderModel
+            {
+                public class SkuDetailItemModel
+                {
+                    public string sku_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public long count
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string name
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string album_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string pic
+                    {
+                        get;
+                        set;
+                    }
+                }
+
+                //
+                // Summary:
+                //     订单号
+                public string out_trade_no
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     下单用户ID
+                public string user_id
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     方案ID，如自选，则为空
+                public string plan_id
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     订单描述
+                public string title
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     赞助月份
+                public int month
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     真实付款金额，如有兑换码，则为0.00
+                public string total_amount
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     显示金额，如有折扣则为折扣前金额
+                public string show_amount
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     2 为交易成功。目前仅会推送此类型
+                public int status
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     订单留言
+                public string remark
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     兑换码ID
+                public string redeem_id
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     0表示常规方案 1表示售卖方案
+                public int product_type
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     折扣
+                public string discount
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     如果为售卖类型，以数组形式表示具体型号
+                public SkuDetailItemModel[] sku_detail
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     收件人
+                public string address_person
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     收件人电话
+                public string address_phone
+                {
+                    get;
+                    set;
+                }
+
+                //
+                // Summary:
+                //     收件人地址
+                public string address_address
+                {
+                    get;
+                    set;
+                }
+            }
+
+            public OrderModel[] list
+            {
+                get;
+                set;
+            }
+
+            public int total_count
+            {
+                get;
+                set;
+            }
+
+            public int total_page
+            {
+                get;
+                set;
+            }
+        }
+
+        //
+        // Summary:
+        //     ec 为 200 时，表示请求正常，否则 异常，同时 em 会提示错误信息 400001 params incomplete 400002 time was
+        //     expired 400003 params was not valid json string 400004 no valid token found 400005
+        //     sign validation failed 响应 400005 时，会 data.debug 处返回服务端对参数做拼接的结构
+        public int ec
+        {
+            get;
+            set;
+        }
+
+        public string em
+        {
+            get;
+            set;
+        }
+
+        public DataModel data
+        {
+            get;
+            set;
+        }
+    }
+    ```
+    ```csharp
+    public class QuerySponsorResponseModel
+    {
+        public class DataModel
+        {
+            public class ListItemModel
+            {
+                public class SponsorPlanModel
+                {
+                    public string plan_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int rank
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string user_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int status
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string name
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string pic
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string desc
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string price
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int update_time
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int pay_month
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string show_price
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int independent
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int permanent
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int can_buy_hide
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int need_address
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int product_type
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int sale_limit_count
+                    {
+                        get;
+                        set;
+                    }
+
+                    public bool need_invite_code
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int expire_time
+                    {
+                        get;
+                        set;
+                    }
+
+                    public object[] sku_processed
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int rankType
+                    {
+                        get;
+                        set;
+                    }
+                }
+
+                public class CurrentPlanModel
+                {
+                    public string plan_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int rank
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string user_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int status
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string name
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string pic
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string desc
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string price
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int update_time
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int pay_month
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string show_price
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int independent
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int permanent
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int can_buy_hide
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int need_address
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int product_type
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int sale_limit_count
+                    {
+                        get;
+                        set;
+                    }
+
+                    public bool need_invite_code
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int expire_time
+                    {
+                        get;
+                        set;
+                    }
+
+                    public object[] sku_processed
+                    {
+                        get;
+                        set;
+                    }
+
+                    public int rankType
+                    {
+                        get;
+                        set;
+                    }
+                }
+
+                public class UserModel
+                {
+                    public string user_id
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string name
+                    {
+                        get;
+                        set;
+                    }
+
+                    public string avatar
+                    {
+                        get;
+                        set;
+                    }
+                }
+
+                public List<SponsorPlanModel> sponsor_plans
+                {
+                    get;
+                    set;
+                }
+
+                public CurrentPlanModel current_plan
+                {
+                    get;
+                    set;
+                }
+
+                public string all_sum_amount
+                {
+                    get;
+                    set;
+                }
+
+                public long create_time
+                {
+                    get;
+                    set;
+                }
+
+                public long last_pay_time
+                {
+                    get;
+                    set;
+                }
+
+                public UserModel user
+                {
+                    get;
+                    set;
+                }
+            }
+
+            public ListItemModel[] list
+            {
+                get;
+                set;
+            }
+
+            public int total_count
+            {
+                get;
+                set;
+            }
+
+            public int total_page
+            {
+                get;
+                set;
+            }
+        }
+
+        //
+        // Summary:
+        //     ec 为 200 时，表示请求正常，否则 异常，同时 em 会提示错误信息 400001 params incomplete 400002 time was
+        //     expired 400003 params was not valid json string 400004 no valid token found 400005
+        //     sign validation failed 响应 400005 时，会 data.debug 处返回服务端对参数做拼接的结构
+        public int ec
+        {
+            get;
+            set;
+        }
+
+        public string em
+        {
+            get;
+            set;
+        }
+
+        public DataModel data
+        {
+            get;
+            set;
+        }
+    }
+    ```
+</details>
 
 ## Related Projects
 

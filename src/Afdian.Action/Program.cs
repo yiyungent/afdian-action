@@ -119,9 +119,10 @@ namespace Afdian.Action
                 int endFlagIndex = targetFileContent.IndexOf(endFlag);
                 if (startFlagIndex != -1 && endFlagIndex != -1 && endFlagIndex > startFlagIndex)
                 {
-                    string oldStr = targetFileContent.Substring(startFlagIndex, endFlagIndex - startFlagIndex + 1);
-                    string newStr = startFlag + "\n" + runResult + "\n" + endFlag;
-                    targetFileContent = targetFileContent.Replace(oldStr, newStr);
+                    string beforeStr = targetFileContent.Substring(0, startFlagIndex);
+                    string afterSstr = targetFileContent.Substring(endFlagIndex + endFlag.Length);
+                    string centerStr = startFlag + "\n" + runResult + "\n" + endFlag;
+                    targetFileContent = beforeStr + centerStr + afterSstr;
 
                     File.WriteAllText(targetFilePath, targetFileContent, System.Text.Encoding.UTF8);
 
