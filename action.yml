@@ -70,8 +70,8 @@ runs:
       # ${{ github.action_path }} or $GITHUB_ACTION_PATH
       # run: ${{ github.action_path }}/test/script.sh
       env: |
-        INPUT_AFDIAN_USERID: ${{ inputs.afdian_userId }}
         INPUT_AFDIAN_TOKEN: ${{ inputs.afdian_token }}
+        INPUT_AFDIAN_USERID: ${{ inputs.afdian_userId }}
         INPUT_TEMPLATE_FILEPATH: ${{ github.workspace }}/${{ inputs.template_filePath }}
         INPUT_TARGET_FILEPATH: ${{ github.workspace }}/${{ inputs.target_filePath }}
         INPUT_START_FLAG: ${{ inputs.start_flag }}
