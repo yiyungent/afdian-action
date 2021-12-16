@@ -69,16 +69,22 @@ runs:
       # The command you want to run. This can be inline or a script in your action repository:
       # ${{ github.action_path }} or $GITHUB_ACTION_PATH
       # run: ${{ github.action_path }}/test/script.sh
-      env: |
-        INPUT_AFDIAN_TOKEN: ${{ inputs.afdian_token }}
-        INPUT_AFDIAN_USERID: ${{ inputs.afdian_userId }}
-        INPUT_TEMPLATE_FILEPATH: ${{ github.workspace }}/${{ inputs.template_filePath }}
-        INPUT_TARGET_FILEPATH: ${{ github.workspace }}/${{ inputs.target_filePath }}
-        INPUT_START_FLAG: ${{ inputs.start_flag }}
-        INPUT_END_FLAG: ${{ inputs.end_flag }}
-        INPUT_AFDIAN_DEBUG: ${{ inputs.afdian_debug }}
+      # env: |  # 失败报错
+      #   INPUT_AFDIAN_TOKEN: ${{ inputs.afdian_token }}
+      #   INPUT_AFDIAN_USERID: ${{ inputs.afdian_userId }}
+      #   INPUT_TEMPLATE_FILEPATH: ${{ github.workspace }}/${{ inputs.template_filePath }}
+      #   INPUT_TARGET_FILEPATH: ${{ github.workspace }}/${{ inputs.target_filePath }}
+      #   INPUT_START_FLAG: ${{ inputs.start_flag }}
+      #   INPUT_END_FLAG: ${{ inputs.end_flag }}
+      #   INPUT_AFDIAN_DEBUG: ${{ inputs.afdian_debug }}
       run: | 
-        # export INPUT_CIA_DEBUG=${{ inputs.cia_debug }}
+        export INPUT_AFDIAN_USERID=${{ inputs.afdian_userId }}
+        export INPUT_AFDIAN_TOKEN=${{ inputs.afdian_token }}
+        export INPUT_TEMPLATE_FILEPATH=${{ github.workspace }}/${{ inputs.template_filePath }}
+        export INPUT_TARGET_FILEPATH=${{ github.workspace }}/${{ inputs.target_filePath }}
+        export INPUT_START_FLAG=${{ inputs.start_flag }}
+        export INPUT_END_FLAG=${{ inputs.end_flag }}
+        export INPUT_AFDIAN_DEBUG=${{ inputs.afdian_debug }}
         cd ${{ github.action_path }}/src/Afdian.Action
         dotnet run
       shell: bash
