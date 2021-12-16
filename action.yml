@@ -78,14 +78,15 @@ runs:
       #   INPUT_END_FLAG: ${{ inputs.end_flag }}
       #   INPUT_AFDIAN_DEBUG: ${{ inputs.afdian_debug }}
       run: | 
-        export INPUT_AFDIAN_USERID=${{ inputs.afdian_userId }}
-        export INPUT_AFDIAN_TOKEN=${{ inputs.afdian_token }}
-        export INPUT_TEMPLATE_FILEPATH=${{ github.workspace }}/${{ inputs.template_filePath }}
-        export INPUT_TARGET_FILEPATH=${{ github.workspace }}/${{ inputs.target_filePath }}
-        export INPUT_START_FLAG=${{ inputs.start_flag }}
-        export INPUT_END_FLAG=${{ inputs.end_flag }}
-        export INPUT_AFDIAN_DEBUG=${{ inputs.afdian_debug }}
-        cd ${{ github.action_path }}/src/Afdian.Action
+        export INPUT_AFDIAN_USERID="${{ inputs.afdian_userId }}"
+        export INPUT_AFDIAN_TOKEN="${{ inputs.afdian_token }}"
+        export INPUT_TEMPLATE_FILEPATH="${{ github.workspace }}/${{ inputs.template_filePath }}"
+        export INPUT_TARGET_FILEPATH="${{ github.workspace }}/${{ inputs.target_filePath }}"
+        export INPUT_START_FLAG="${{ inputs.start_flag }}"
+        export INPUT_END_FLAG="${{ inputs.end_flag }}"
+        export INPUT_AFDIAN_DEBUG="${{ inputs.afdian_debug }}"
+        cd ${{ github.action_path }}
+        cd src/Afdian.Action
         dotnet run
       shell: bash
 
