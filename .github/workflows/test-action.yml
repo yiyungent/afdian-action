@@ -28,7 +28,7 @@ jobs:
           # 默认为: .github/afdian-action.cshtml
           template_filePath: ".github/afdian-action.cshtml"
           # 默认为: README.md
-          target_filePath: "README.md"
+          target_filePath: "Sponsors.md"
           afdian_debug: true
 
       # Use the output from the `test` step

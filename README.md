@@ -11,6 +11,8 @@
 
 使用 `GitHub Action` 自动生成 爱发电 赞助页面, 无需再手动更新赞助列表。
 
+> 效果见 [Sponsor.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsor.md)
+
 ## 功能
 
 - [x] 自动生成 爱发电 赞助页面
@@ -46,7 +48,7 @@
 
 ### 2. 修改 目标文件: 如: README.md
 
-> 添加如下 开始,结束标志, 此标志中间将插入模板解析后的赞助列表
+> 添加如下 `开始,结束标志`, 此标志中间将插入模板解析后的赞助列表
 
 ```markdown
 ## 赞助者
@@ -126,15 +128,7 @@ jobs:
           automated pr
 ```
 
-
-> 生成效果如下, 本页面下方赞助者即为自动生成
-
-## 赞助者
-
-感谢这些来自爱发电的赞助者：
-
-<!-- AFDIAN-ACTION:START -->
-<!-- AFDIAN-ACTION:END -->
+> 生成效果见 [Sponsor.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsor.md)
 
 ## Related Projects
 

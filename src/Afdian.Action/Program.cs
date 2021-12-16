@@ -115,11 +115,13 @@ namespace Afdian.Action
                     return;
                 }
                 string targetFileContent = Utils.FileUtil.ReadStringAsync(targetFilePath).Result;
-                // TODO: 暂时并未匹配 endFlag
                 int startFlagIndex = targetFileContent.IndexOf(startFlag);
-                if (startFlagIndex != -1)
+                int endFlagIndex = targetFileContent.IndexOf(endFlag);
+                if (startFlagIndex != -1 && endFlagIndex != -1 && endFlagIndex > startFlagIndex)
                 {
-                    targetFileContent = targetFileContent.Replace(startFlag, startFlag + "\n" + runResult + "\n");
+                    string oldStr = targetFileContent.Substring(startFlagIndex, endFlagIndex - startFlagIndex + 1);
+                    string newStr = startFlag + "\n" + runResult + "\n" + endFlag;
+                    targetFileContent = targetFileContent.Replace(oldStr, newStr);
 
                     File.WriteAllText(targetFilePath, targetFileContent, System.Text.Encoding.UTF8);
 
