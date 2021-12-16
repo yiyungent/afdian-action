@@ -1,6 +1,6 @@
 <h1 align="center">afdian-action</h1>
 
-> 🔧 爱发电 自动生成赞助页面 | GitHub Action
+> 🔧 自动更新 爱发电 赞助列表 | GitHub Action
 
 [![repo size](https://img.shields.io/github/repo-size/yiyungent/afdian-action.svg?style=flat)]()
 [![LICENSE](https://img.shields.io/github/license/yiyungent/afdian-action.svg?style=flat)](https://github.com/yiyungent/afdian-action/blob/main/LICENSE)
@@ -9,13 +9,13 @@
 
 ## 介绍
 
-使用 `GitHub Action` 自动生成 爱发电 赞助页面, 无需再手动更新赞助列表。
+使用 `GitHub Action` 自动更新 爱发电 赞助列表, 无需再手动更新赞助列表。
 
 > 效果见 [Sponsors.md](https://github.com/yiyungent/afdian-action/blob/main/Sponsors.md)
 
 ## 功能
 
-- [x] 自动生成 爱发电 赞助页面
+- [x] 自动更新 爱发电 赞助列表
 - [x] 支持 Razor 语法, 高度灵活 (编程式自定义模板), 可使用模板文件自定义样式风格
 
 ## 使用
@@ -37,14 +37,15 @@
         var sponsorItem  = viewModel.Sponsor.data.list[i];
      }
 
-     <a href="https://afdian.net/u/@sponsorItem.user.user_id">
-         <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
-     </a>
-
+<a href="https://afdian.net/u/@sponsorItem.user.user_id">
+    <img src="@sponsorItem.user.avatar?imageView2/1/w/120/h/120" width="40" height="40" alt="@sponsorItem.user.name" title="@sponsorItem.user.name"/>
+</a>
 }
+<!-- 注意: 尽量将标签前靠,否则经测试可能被 GitHub 解析为代码块 -->
 ```
 
-> 补充: 此模板 风格来自 <https://github.com/CnGal/CnGalWebSite>
+> 补充: 此模板 风格来自 <https://github.com/CnGal/CnGalWebSite>   
+> 如需更多自定义, 见下方 自定义模板
 
 ### 2. 修改 目标文件: 如: README.md
 
@@ -133,7 +134,7 @@ jobs:
 
 ## 自定义模板
 
-> 事实上, @Model.Order 值与爱发电官方 queryOrder 返回一致, @Model.Sponsor 值与爱发电官方 querySponsor 返回一致
+> 事实上, `@Model.Order` 值与爱发电官方 `queryOrder` 返回一致, `@Model.Sponsor` 值与爱发电官方 `querySponsor` 返回一致
 
 <details>
   <summary>点我 打开/关闭 模板参数</summary>
@@ -745,9 +746,7 @@ jobs:
 
 ## Related Projects
 
-- [yiyungent/coo: 🧰 .NET 自用CLI, 工具集](https://github.com/yiyungent/coo)    
-  - 本项目 核心依赖
-
+- [yiyungent/Afdian.Sdk: 🍰 爱发电 非官方 .NET SDK](https://github.com/yiyungent/Afdian.Sdk)    
 
 ## Donate
 
