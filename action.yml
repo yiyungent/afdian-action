@@ -44,6 +44,16 @@ inputs:
     default: ""
     required: true
 
+  assemblyReferences:
+    description: "assemblyReferences"
+    default: ""
+    required: false
+
+  usings:
+    description: "usings"
+    default: ""
+    required: false
+
   afdian_debug:
     description: "debug for afdian-action"
     default: false
@@ -84,6 +94,8 @@ runs:
         export INPUT_TARGET_FILEPATH="${{ github.workspace }}/${{ inputs.target_filePath }}"
         export INPUT_START_FLAG="${{ inputs.start_flag }}"
         export INPUT_END_FLAG="${{ inputs.end_flag }}"
+        export INPUT_ASSEMBLYREFERENCES="${{ inputs.assemblyReferences }}"
+        export INPUT_USINGS="${{ inputs.usings }}"
         export INPUT_AFDIAN_DEBUG="${{ inputs.afdian_debug }}"
         cd ${{ github.action_path }}
         cd src/Afdian.Action
