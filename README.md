@@ -24,7 +24,8 @@
 
 > .github/afdian-action.cshtml
 
-> 此模板 可用 Razor 语法, 可自定义
+> 此模板 可用 Razor 语法, 可自定义    
+> PS: 一个更美观完善的 [afdian-action.cshtml](https://github.com/yiyungent/Meting4Net/blob/master/.github/afdian-action.cshtml)
 
 ```cshtml
 @{
