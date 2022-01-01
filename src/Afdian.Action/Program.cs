@@ -30,6 +30,8 @@ namespace Afdian.Action
             string targetFilePath = Utils.GitHubActionsUtil.GetEnv("target_filePath");
             string startFlag = Utils.GitHubActionsUtil.GetEnv("start_flag") ?? "<!-- AFDIAN-ACTION:START -->";
             string endFlag = Utils.GitHubActionsUtil.GetEnv("end_flag") ?? "<!-- AFDIAN-ACTION:END -->";
+            string usingsStr = Utils.GitHubActionsUtil.GetEnv("usings") ?? "";
+            string assemblyReferencesStr = Utils.GitHubActionsUtil.GetEnv("assemblyReferences") ?? "";
 
             if (!githubAction)
             {
@@ -81,11 +83,44 @@ namespace Afdian.Action
             }
             try
             {
+                #region assemblyReference, using
+                List<string> assemblyReferenceList = new List<string>()
+                {
+                    "System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+                };
+                var assemblyReferenceTemp = assemblyReferencesStr.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                if (assemblyReferenceTemp != null && assemblyReferenceTemp.Length >= 1)
+                {
+                    assemblyReferenceList.AddRange(assemblyReferenceTemp);
+                }
+                assemblyReferenceList = assemblyReferenceList.Distinct().ToList();
+                List<string> usingList = new List<string>()
+                {
+                    "System.Collections.Generic",
+                    "System.Linq",
+                };
+                var usingsTemp = usingsStr.Split(new string[] { ";", " " }, StringSplitOptions.RemoveEmptyEntries);
+                if (usingsTemp != null && usingsTemp.Length >= 1)
+                {
+                    usingList.AddRange(usingsTemp);
+                }
+                usingList = usingList.Distinct().ToList();
+                #endregion
+
                 IRazorEngineCompiledTemplate<RazorEngineTemplateBase<AfdianViewModel>> template =
                     razorEngine.Compile<RazorEngineTemplateBase<AfdianViewModel>>(templateText, builder =>
                     {
                         builder.AddAssemblyReference(typeof(System.IO.File)); // by type
                         builder.AddAssemblyReference(typeof(Afdian.Sdk.ResponseModels.QuerySponsorResponseModel)); // by type
+
+                        foreach (var item in assemblyReferenceList)
+                        {
+                            builder.AddAssemblyReferenceByName(item);
+                        }
+                        foreach (var item in usingList)
+                        {
+                            builder.AddUsing(item);
+                        }
                     });
 
                 runResult = template.Run(instance =>

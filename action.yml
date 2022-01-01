@@ -1,6 +1,6 @@
 name: "afdian-action"
 author: yiyungent
-description: "爱发电 自动生成赞助页面 | GitHub Action"
+description: "自动更新 爱发电 赞助列表 | GitHub Action"
 
 
 inputs:

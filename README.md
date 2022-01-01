@@ -93,6 +93,12 @@ jobs:
           template_filePath: ".github/afdian-action.cshtml"
           # 默认为: README.md
           target_filePath: "README.md"
+          # 可省, 高级选项: RazorEngine Complie, 在 cshtml 中需要 using 的 namespace, 多个用 ; 隔开
+          usings: ""
+          # 可省, 高级选项: RazorEngine Complie, 在 cshtml 中需要添加的 系统引用, 多个用 ; 隔开
+          # 例如: assemblyReferences: "System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+          assemblyReferences: ""
+
 
       # 下方为 直接 push 到目标分支, 当然你也可以选择 Pull Request 方式
       - name: Commit files
@@ -139,21 +145,24 @@ jobs:
 <details>
   <summary>点我 打开/关闭 模板参数</summary>
 
-    ```csharp
-    // AfdianViewModel 即为 @Model
-    public class AfdianViewModel
-    {
-        public QueryOrderResponseModel Order { get; set; }
+```csharp
+// AfdianViewModel 即为 @Model
+public class AfdianViewModel
+{
+    public QueryOrderResponseModel Order { get; set; }
 
-        public QuerySponsorResponseModel Sponsor { get; set; }
-    }
-    ```
-    ```csharp
+    public QuerySponsorResponseModel Sponsor { get; set; }
+}
+```
+
+```csharp
+namespace Afdian.Sdk.ResponseModels
+{
     public class QueryOrderResponseModel
     {
         public class DataModel
         {
-            public class OrderModel
+            public class ListItemModel
             {
                 public class SkuDetailItemModel
                 {
@@ -299,7 +308,7 @@ jobs:
                 //
                 // Summary:
                 //     如果为售卖类型，以数组形式表示具体型号
-                public SkuDetailItemModel[] sku_detail
+                public List<SkuDetailItemModel> sku_detail
                 {
                     get;
                     set;
@@ -333,7 +342,7 @@ jobs:
                 }
             }
 
-            public OrderModel[] list
+            public List<ListItemModel> list
             {
                 get;
                 set;
@@ -375,8 +384,12 @@ jobs:
             set;
         }
     }
-    ```
-    ```csharp
+}
+```
+
+```csharp
+namespace Afdian.Sdk.ResponseModels
+{
     public class QuerySponsorResponseModel
     {
         public class DataModel
@@ -499,7 +512,7 @@ jobs:
                         set;
                     }
 
-                    public object[] sku_processed
+                    public List<object> sku_processed
                     {
                         get;
                         set;
@@ -628,7 +641,7 @@ jobs:
                         set;
                     }
 
-                    public object[] sku_processed
+                    public List<object> sku_processed
                     {
                         get;
                         set;
@@ -699,7 +712,7 @@ jobs:
                 }
             }
 
-            public ListItemModel[] list
+            public List<ListItemModel> list
             {
                 get;
                 set;
@@ -741,7 +754,8 @@ jobs:
             set;
         }
     }
-    ```
+}
+```
 </details>
 
 ## Related Projects
