@@ -30,6 +30,8 @@ jobs:
           # 默认为: README.md
           target_filePath: "Sponsors.md"
           afdian_debug: true
+          assemblyReferences: "System.Runtime, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+          usings: "System"
 
       # Use the output from the `test` step
       - name: Get the output afdian_result
