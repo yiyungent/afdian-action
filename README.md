@@ -5,6 +5,7 @@
 [![repo size](https://img.shields.io/github/repo-size/yiyungent/afdian-action.svg?style=flat)]()
 [![LICENSE](https://img.shields.io/github/license/yiyungent/afdian-action.svg?style=flat)](https://github.com/yiyungent/afdian-action/blob/main/LICENSE)
 [![QQ Group](https://img.shields.io/badge/QQ%20Group-894031109-deepgreen)](https://jq.qq.com/?_wv=1027&k=q5R82fYN)
+[hits](https://api-onetree.moeci.com/hits.svg?id=afdian-action)
 
 
 ## 介绍
