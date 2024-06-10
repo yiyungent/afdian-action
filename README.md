@@ -62,7 +62,7 @@
 <!-- AFDIAN-ACTION:END -->
 ```
 
-### 2. 创建 afdian-action.yml
+### 3. 创建 afdian-action.yml
 
 > .github/workflows/afdian-action.yml
 
@@ -96,10 +96,10 @@ jobs:
           # 默认为: README.md
           target_filePath: "README.md"
           # 可省, 高级选项: RazorEngine Complie, 在 cshtml 中需要 using 的 namespace, 多个用 ; 隔开
-          usings: ""
+          usings: "System"
           # 可省, 高级选项: RazorEngine Complie, 在 cshtml 中需要添加的 系统引用, 多个用 ; 隔开
           # 例如: assemblyReferences: "System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-          assemblyReferences: ""
+          assemblyReferences: "System.Runtime, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
 
 
       # 下方为 直接 push 到目标分支, 当然你也可以选择 Pull Request 方式
