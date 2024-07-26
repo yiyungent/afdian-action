@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Afdian.Sdk" Version="0.3.0" />
+    <PackageReference Include="Afdian.Sdk" Version="0.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="RazorEngineCore" Version="2021.7.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
